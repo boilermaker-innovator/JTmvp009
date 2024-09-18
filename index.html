@@ -78,3 +78,63 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Teaser</title>
+    <style>
+        /* ... (previous styles remain the same) ... */
+        
+        .info-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #0066cc;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .additional-info {
+            display: none;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="job-teaser">
+        <!-- ... (previous job teaser content remains the same) ... -->
+    </div>
+    
+    <div class="info-icon" onclick="toggleAdditionalInfo()">i</div>
+    
+    <div class="additional-info" id="additionalInfo">
+        <h3>Additional Information</h3>
+        <p>This job opportunity is perfect for experienced Boiler Makers looking for a challenging role in the mining industry. Our company values safety, quality, and integrity in all aspects of our work.</p>
+        <p>We offer competitive salaries, opportunities for career growth, and a supportive work environment. Join our team and be part of exciting projects across Western Australia.</p>
+    </div>
+
+    <script>
+        // ... (previous script content remains the same) ...
+
+        function toggleAdditionalInfo() {
+            var additionalInfo = document.getElementById('additionalInfo');
+            if (additionalInfo.style.display === 'none' || additionalInfo.style.display === '') {
+                additionalInfo.style.display = 'block';
+            } else {
+                additionalInfo.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
