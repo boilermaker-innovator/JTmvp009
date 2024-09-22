@@ -3,137 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Teaser</title>
+    <title>Job Teaser Creator</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
-        .job-teaser { border: 2px solid #0066cc; border-radius: 10px; overflow: hidden; }
-        .header { background-color: #0066cc; color: white; padding: 10px; display: flex; align-items: center; }
-        .logo { width: 50px; height: 50px; margin-right: 10px; }
-        .job-info { flex-grow: 1; }
-        .tabs { display: flex; background-color: #e6e6e6; }
-        .tab { padding: 10px; cursor: pointer; flex-grow: 1; text-align: center; }
-        .tab.active { background-color: white; font-weight: bold; }
-        .content { padding: 15px; }
-        .section { display: none; }
-        .section.active { display: block; }
-        .seek-button { display: block; width: 100%; padding: 15px; background-color: #e60278; color: white; text-align: center; text-decoration: none; font-weight: bold; }
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 0 20px; }
+        form { background-color: #f0f0f0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        textarea { height: 100px; }
+        .button-group { display: flex; justify-content: space-between; margin-top: 20px; }
+        button { padding: 10px 15px; cursor: pointer; font-size: 16px; }
+        .create-button { background-color: #0056b3; color: white; border: none; }
+        .create-button:hover { background-color: #003d82; }
+        .clear-button { background-color: #f44336; color: white; border: none; }
+        .clear-button:hover { background-color: #d32f2f; }
+        .fill-test-button { background-color: #4CAF50; color: white; border: none; }
+        .fill-test-button:hover { background-color: #45a049; }
+        #teaserPreview { border: 4px solid #0056b3; border-radius: 8px; overflow: hidden; }
+        .job-header { background-color: #0056b3; color: white; padding: 15px; display: flex; align-items: center; }
+        .job-logo { width: 60px; height: 60px; object-fit: contain; margin-right: 15px; background-color: white; border-radius: 50%; }
+        .job-title { margin: 0; font-size: 18px; }
+        .job-company-location { margin-top: 5px; font-size: 14px; }
+        .tabs { display: flex; background-color: #e0e0e0; }
+        .tab { padding: 10px; cursor: pointer; background-color: #e0e0e0; border: none; flex-grow: 1; color: #0056b3; }
+        .tab.active { background-color: white; font-weight: bold; border-bottom: 2px solid #0056b3; }
+        .tab-content { padding: 15px; display: none; }
+        .tab-content.active { display: block; }
+        .apply-button { display: block; width: 100%; padding: 12px 0; background-color: #e4007e; color: white; text-align: center; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="job-teaser">
-        <div class="header">
-            <svg class="logo" viewBox="0 0 50 50">
-                <rect width="50" height="50" fill="#ffffff"/>
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0066cc" font-size="30" font-weight="bold">JT</text>
-            </svg>
-            <div class="job-info">
-                <h2 style="margin: 0;">Boiler Makers MEM & Fixed Plant</h2>
-                <p style="margin: 5px 0 0;">AIM Construction Group WA - Pilbara, WA</p>
-            </div>
+    <h1>Job Teaser Creator</h1>
+    <form id="jobForm">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName" required>
+
+        <label for="jobTitle">Job Title:</label>
+        <input type="text" id="jobTitle" name="jobTitle" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="logoUrl">Logo URL:</label>
+        <input type="url" id="logoUrl" name="logoUrl" required>
+
+        <label for="overview">Overview:</label>
+        <textarea id="overview" name="overview" required></textarea>
+
+        <label for="duties">Duties:</label>
+        <textarea id="duties" name="duties" required></textarea>
+
+        <label for="requirements">Requirements:</label>
+        <textarea id="requirements" name="requirements" required></textarea>
+
+        <label for="notes">Notes:</label>
+        <textarea id="notes" name="notes" required></textarea>
+
+        <label for="applyUrl">Apply URL:</label>
+        <input type="url" id="applyUrl" name="applyUrl" required>
+
+        <div class="button-group">
+            <button type="submit" class="create-button">Create Teaser</button>
+            <button type="button" class="fill-test-button" id="fillTest">Fill for Test</button>
+            <button type="button" class="clear-button" id="clearForm">Clear Form</button>
         </div>
-        <div class="tabs">
-            <div class="tab active" data-tab="overview">Overview</div>
-            <div class="tab" data-tab="details">Details</div>
-            <div class="tab" data-tab="requirements">Requirements</div>
-            <div class="tab" data-tab="notes">Notes</div>
-        </div>
-        <div class="content">
-            <div id="overview" class="section active">
-                <p>Join our Pilbara team for Mobile and Fixed Plant Equipment maintenance. FIFO role with 2/1 roster.</p>
-            </div>
-            <div id="details" class="section">
-                <p>Location: Pilbara WA<br>Roster: 2/1 FIFO<br>Position: Full time</p>
-            </div>
-            <div id="requirements" class="section">
-                <p>Boilermaker Trade Qualification<br>MEM and Fixed Plant Maintenance experience<br>High Risk Licences</p>
-            </div>
-            <div id="notes" class="section">
-                <p>Email: careers@aimconstructiongroupwa.com.au<br>Welding Requirements: AS/NZS 1554.1 or AS/NZS 3992</p>
-            </div>
-        </div>
-        <a href="https://www.seek.com.au/job/78272645?tracking=SHR-IOS-SharedJob-anz-1" class="seek-button" target="_blank">Apply on Seek</a>
-    </div>
+    </form>
+
+    <div id="teaserPreview"></div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabs = document.querySelectorAll('.tab');
-        const sections = document.querySelectorAll('.section');
-        let currentTab = 0;
+        document.getElementById('jobForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const teaserHTML = generateTeaserHTML(formData);
+            document.getElementById('teaserPreview').innerHTML = teaserHTML;
+            initTabs();
+        });
 
-        function showTab(index) {
-            sections.forEach(section => section.classList.remove('active'));
-            tabs.forEach(tab => tab.classList.remove('active'));
-            sections[index].classList.add('active');
-            tabs[index].classList.add('active');
+        document.getElementById('clearForm').addEventListener('click', function() {
+            document.getElementById('jobForm').reset();
+            document.getElementById('teaserPreview').innerHTML = '';
+        });
+
+        document.getElementById('fillTest').addEventListener('click', function() {
+            document.getElementById('companyName').value = "OHLMEC";
+            document.getElementById('jobTitle').value = "Mechanical Fitter/Boilermaker";
+            document.getElementById('location').value = "Kalgoorlie, WA";
+            document.getElementById('logoUrl').value = "https://imgur.com/QOt9axm.png";
+            document.getElementById('overview').value = "Join OHLMEC, a growing WA company providing specialised maintenance and fabrication services. We offer attractive remuneration and career development opportunities for experienced Mechanical Fitters and Boilermakers.";
+            document.getElementById('duties').value = "- Perform maintenance on mechanical equipment\n- Fabricate and install metal structures\n- Ensure safety compliance";
+            document.getElementById('requirements').value = "- Australian Recognised Trade Qualification\n- Valid manual Australian Driver's licence\n- Relevant safety certifications";
+            document.getElementById('notes').value = "OHLMEC values safety, quality, and integrity. We are an Equal Opportunity Employer.\n\nContact: careers@ohlmec.com.au";
+            document.getElementById('applyUrl').value = "https://www.seek.com.au/job/78977449?ref=search-standalone&type=standout&origin=jobTitle#sol=86793aee867a8cd01556aa1a10a6aacf09ae9400";
+        });
+
+        function generateTeaserHTML(formData) {
+            return `
+                <div class="job-header">
+                    <img src="${formData.get('logoUrl')}" alt="${formData.get('companyName')} Logo" class="job-logo">
+                    <div>
+                        <h2 class="job-title">${formData.get('jobTitle')}</h2>
+                        <div class="job-company-location">${formData.get('companyName')} - ${formData.get('location')}</div>
+                    </div>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" data-tab="overview">Overview</button>
+                    <button class="tab" data-tab="duties">Duties</button>
+                    <button class="tab" data-tab="requirements">Requirements</button>
+                    <button class="tab" data-tab="notes">Notes</button>
+                </div>
+                <div id="overview" class="tab-content active">
+                    <p>${formData.get('overview')}</p>
+                </div>
+                <div id="duties" class="tab-content">
+                    <ul>
+                        ${formData.get('duties').split('\n').map(duty => `<li>${duty.replace(/^-\s*/, '')}</li>`).join('')}
+                    </ul>
+                </div>
+                <div id="requirements" class="tab-content">
+                    <ul>
+                        ${formData.get('requirements').split('\n').map(req => `<li>${req.replace(/^-\s*/, '')}</li>`).join('')}
+                    </ul>
+                </div>
+                <div id="notes" class="tab-content">
+                    <p>${formData.get('notes').replace(/\n/g, '<br>')}</p>
+                </div>
+                <a href="${formData.get('applyUrl')}" class="apply-button" target="_blank">Apply on Seek</a>
+            `;
         }
 
-        function rotateTab() {
-            currentTab = (currentTab + 1) % tabs.length;
-            showTab(currentTab);
-        }
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            let currentTab = 0;
 
-        // Start the rotation
-        setInterval(rotateTab, 3000); // Rotate every 3 seconds
-    });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Teaser</title>
-    <style>
-        /* ... (previous styles remain the same) ... */
-        
-        .info-icon {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #0066cc;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px auto;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .additional-info {
-            display: none;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="job-teaser">
-        <!-- ... (previous job teaser content remains the same) ... -->
-    </div>
-    
-    <div class="info-icon" onclick="toggleAdditionalInfo()">i</div>
-    
-    <div class="additional-info" id="additionalInfo">
-        <h3>Additional Information</h3>
-        <p>This job opportunity is perfect for experienced Boiler Makers looking for a challenging role in the mining industry. Our company values safety, quality, and integrity in all aspects of our work.</p>
-        <p>We offer competitive salaries, opportunities for career growth, and a supportive work environment. Join our team and be part of exciting projects across Western Australia.</p>
-    </div>
-
-    <script>
-        // ... (previous script content remains the same) ...
-
-        function toggleAdditionalInfo() {
-            var additionalInfo = document.getElementById('additionalInfo');
-            if (additionalInfo.style.display === 'none' || additionalInfo.style.display === '') {
-                additionalInfo.style.display = 'block';
-            } else {
-                additionalInfo.style.display = 'none';
+            function showTab(index) {
+                tabs.forEach(tab => tab.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                tabs[index].classList.add('active');
+                tabContents[index].classList.add('active');
             }
+
+            tabs.forEach((tab, index) => {
+                tab.addEventListener('click', () => {
+                    showTab(index);
+                    clearInterval(autoSwitch);
+                });
+            });
+
+            const autoSwitch = setInterval(() => {
+                currentTab = (currentTab + 1) % tabs.length;
+                showTab(currentTab);
+            }, 3000);
         }
     </script>
 </body>
