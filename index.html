@@ -29,6 +29,9 @@
         .tab-content { padding: 15px; display: none; }
         .tab-content.active { display: block; }
         .apply-button { display: block; width: 100%; padding: 12px 0; background-color: #e4007e; color: white; text-align: center; text-decoration: none; font-weight: bold; }
+        .logo-url-container { display: flex; align-items: center; }
+        .info-button { margin-left: 10px; background: none; border: none; font-size: 20px; cursor: pointer; }
+        #info-note { margin-top: 10px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9; }
     </style>
 </head>
 <body>
@@ -44,19 +47,45 @@
         <input type="text" id="location" name="location" required>
 
         <label for="logoUrl">Logo URL:</label>
-        <input type="url" id="logoUrl" name="logoUrl" required>
+        <div class="logo-url-container">
+            <input type="url" id="logoUrl" name="logoUrl" required>
+            <button type="button" class="info-button" onclick="toggleInfo()">ℹ️</button>
+        </div>
+        <div id="info-note" style="display:none;">
+            <p><strong>Logo URL</strong></p>
+            <p>Don't have a logo URL? You can easily upload your logo to a free image hosting service like <a href="https://imgbb.com" target="_blank">imgbb.com</a>. Here's how:</p>
+            <ol>
+                <li>Visit <a href="https://imgbb.com" target="_blank">imgbb.com</a>.</li>
+                <li>Click "Start Uploading" and select your logo image.</li>
+                <li>Once uploaded, copy the "Direct Link" URL provided.</li>
+                <li>Paste the URL into the form field.</li>
+            </ol>
+            <p>This will allow us to display your logo!</p>
+        </div>
 
-        <label for="overview">Overview:</label>
-        <textarea id="overview" name="overview" required></textarea>
+        <label for="tab1Title">Tab 1 Title:</label>
+        <input type="text" id="tab1Title" name="tab1Title" required>
 
-        <label for="duties">Duties:</label>
-        <textarea id="duties" name="duties" required></textarea>
+        <label for="tab1Content">Tab 1 Content:</label>
+        <textarea id="tab1Content" name="tab1Content" required></textarea>
 
-        <label for="requirements">Requirements:</label>
-        <textarea id="requirements" name="requirements" required></textarea>
+        <label for="tab2Title">Tab 2 Title:</label>
+        <input type="text" id="tab2Title" name="tab2Title" required>
 
-        <label for="notes">Notes:</label>
-        <textarea id="notes" name="notes" required></textarea>
+        <label for="tab2Content">Tab 2 Content:</label>
+        <textarea id="tab2Content" name="tab2Content" required></textarea>
+
+        <label for="tab3Title">Tab 3 Title:</label>
+        <input type="text" id="tab3Title" name="tab3Title" required>
+
+        <label for="tab3Content">Tab 3 Content:</label>
+        <textarea id="tab3Content" name="tab3Content" required></textarea>
+
+        <label for="tab4Title">Tab 4 Title:</label>
+        <input type="text" id="tab4Title" name="tab4Title" required>
+
+        <label for="tab4Content">Tab 4 Content:</label>
+        <textarea id="tab4Content" name="tab4Content" required></textarea>
 
         <label for="applyUrl">Apply URL:</label>
         <input type="url" id="applyUrl" name="applyUrl" required>
@@ -71,6 +100,15 @@
     <div id="teaserPreview"></div>
 
     <script>
+        function toggleInfo() {
+            var info = document.getElementById("info-note");
+            if (info.style.display === "none") {
+                info.style.display = "block";
+            } else {
+                info.style.display = "none";
+            }
+        }
+
         document.getElementById('jobForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(this);
@@ -89,14 +127,25 @@
             document.getElementById('jobTitle').value = "Mechanical Fitter/Boilermaker";
             document.getElementById('location').value = "Kalgoorlie, WA";
             document.getElementById('logoUrl').value = "https://imgur.com/QOt9axm.png";
-            document.getElementById('overview').value = "Join OHLMEC, a growing WA company providing specialised maintenance and fabrication services. We offer attractive remuneration and career development opportunities for experienced Mechanical Fitters and Boilermakers.";
-            document.getElementById('duties').value = "- Perform maintenance on mechanical equipment\n- Fabricate and install metal structures\n- Ensure safety compliance";
-            document.getElementById('requirements').value = "- Australian Recognised Trade Qualification\n- Valid manual Australian Driver's licence\n- Relevant safety certifications";
-            document.getElementById('notes').value = "OHLMEC values safety, quality, and integrity. We are an Equal Opportunity Employer.\n\nContact: careers@ohlmec.com.au";
+            document.getElementById('tab1Title').value = "About";
+            document.getElementById('tab1Content').value = "Join OHLMEC, a growing WA company providing specialised maintenance and fabrication services. We offer attractive remuneration and career development opportunities for experienced Mechanical Fitters and Boilermakers.";
+            document.getElementById('tab2Title').value = "Role";
+            document.getElementById('tab2Content').value = "- Perform maintenance on mechanical equipment\n- Fabricate and install metal structures\n- Ensure safety compliance";
+            document.getElementById('tab3Title').value = "You";
+            document.getElementById('tab3Content').value = "- Australian Recognised Trade Qualification\n- Valid manual Australian Driver's licence\n- Relevant safety certifications";
+            document.getElementById('tab4Title').value = "Details";
+            document.getElementById('tab4Content').value = "OHLMEC values safety, quality, and integrity. We are an Equal Opportunity Employer.\n\nContact: careers@ohlmec.com.au";
             document.getElementById('applyUrl').value = "https://www.seek.com.au/job/78977449?ref=search-standalone&type=standout&origin=jobTitle#sol=86793aee867a8cd01556aa1a10a6aacf09ae9400";
         });
 
         function generateTeaserHTML(formData) {
+            const tabs = [
+                { title: formData.get('tab1Title'), content: formData.get('tab1Content') },
+                { title: formData.get('tab2Title'), content: formData.get('tab2Content') },
+                { title: formData.get('tab3Title'), content: formData.get('tab3Content') },
+                { title: formData.get('tab4Title'), content: formData.get('tab4Content') }
+            ];
+
             return `
                 <div class="job-header">
                     <img src="${formData.get('logoUrl')}" alt="${formData.get('companyName')} Logo" class="job-logo">
@@ -106,27 +155,15 @@
                     </div>
                 </div>
                 <div class="tabs">
-                    <button class="tab active" data-tab="overview">Overview</button>
-                    <button class="tab" data-tab="duties">Duties</button>
-                    <button class="tab" data-tab="requirements">Requirements</button>
-                    <button class="tab" data-tab="notes">Notes</button>
+                    ${tabs.map((tab, index) => `
+                        <button class="tab ${index === 0 ? 'active' : ''}" data-tab="tab${index + 1}">${tab.title}</button>
+                    `).join('')}
                 </div>
-                <div id="overview" class="tab-content active">
-                    <p>${formData.get('overview')}</p>
-                </div>
-                <div id="duties" class="tab-content">
-                    <ul>
-                        ${formData.get('duties').split('\n').map(duty => `<li>${duty.replace(/^-\s*/, '')}</li>`).join('')}
-                    </ul>
-                </div>
-                <div id="requirements" class="tab-content">
-                    <ul>
-                        ${formData.get('requirements').split('\n').map(req => `<li>${req.replace(/^-\s*/, '')}</li>`).join('')}
-                    </ul>
-                </div>
-                <div id="notes" class="tab-content">
-                    <p>${formData.get('notes').replace(/\n/g, '<br>')}</p>
-                </div>
+                ${tabs.map((tab, index) => `
+                    <div id="tab${index + 1}" class="tab-content ${index === 0 ? 'active' : ''}">
+                        <p>${tab.content.replace(/\n/g, '<br>')}</p>
+                    </div>
+                `).join('')}
                 <a href="${formData.get('applyUrl')}" class="apply-button" target="_blank">Apply on Seek</a>
             `;
         }
